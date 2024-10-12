@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Call of Duty Tournament Details</title>
+  <!-- Link to Google Fonts for Audiowide -->
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+  <style>
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Audiowide', cursive; /* Updated font */
+      line-height: 1.6;
+      background-color: #0D0D59; /* Dark blue background */
+      color: #fff;
+    }
+
+    header {
+      background-color: #333; /* Header background color */
+      color: #fff;
+      padding: 10px 20px;
+      text-align: left; /* Align text to the left */
+      display: flex; /* Flexbox for logo and title */
+      align-items: center; /* Center vertically */
+    }
+
+    header img {
+      height: 50px; /* Logo height */
+      margin-right: 20px; /* Space between logo and title */
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
+    /* Rules and Regulations Section */
+    .rules {
+      background: white; /* New container background color */
+      color: #1F1F1F; /* Text color */
+      padding: 20px;
+      margin-bottom: 20px;
+      flex-basis: 45%;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .rules h2 {
+      margin-bottom: 10px;
+    }
+
+    .rules ul {
+      list-style-type: square;
+      margin-left: 20px;
+    }
+
+    /* Prize Pool Section */
+    .prize-pool {
+      background: white; /* New container background color */
+      color: #1F1F1F; /* Text color */
+      padding: 20px;
+      margin-bottom: 20px;
+      flex-basis: 45%;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .prize-pool h2 {
+      margin-bottom: 10px;
+    }
+
+    .prize-pool ul {
+      list-style-type: none;
+    }
+
+    .prize-pool ul li {
+      margin: 10px 0;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    /* Contestant List Section */
+    .contestant-list {
+      background: white; /* New container background color */
+      color: #1F1F1F; /* Text color */
+      width: 100%;
+      margin-bottom: 20px;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .contestant-list h2 {
+      margin-bottom: 10px;
+    }
+
+    iframe {
+      border: none; /* Remove border for iframe */
+    }
+
+    /* Footer */
+    footer {
+      background-color: #333; /* Footer background color */
+      color: #fff;
+      padding: 10px 20px;
+      text-align: center;
+    }
+
+    footer p {
+      margin: 0;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .rules, .prize-pool {
+        flex-basis: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="Assets/logo.png" alt="Tournament Logo"> <!-- Replace with your logo URL -->
+    <h1>Call of Duty</h1>
+  </header>
+
+  <main>
+    <!-- Tournament Rules and Regulations -->
+    <section class="rules">
+      <h2>Tournament Rules and Regulations</h2>
+      <ul style="font-family: sans-serif">
+        <li>Rule 1: All participants must adhere to the schedule and join the game lobby on time.</li>
+        <li>Rule 2: Any form of cheating, hacking, or exploiting game mechanics will result in immediate disqualification.</li>
+        <li>Rule 3: Respectful behavior towards other players and tournament organizers is mandatory.</li>
+        <li>Rule 4: Prizes will be awarded to the top player based on the final standings.</li>
+        <li>Rule 5: Any disputes must be raised within 24 hours of the match completion.</li>
+      </ul>
+    </section>
+
+    <!-- Prize Pool -->
+    <section class="prize-pool">
+      <h2>Prize Pool</h2>
+      <ul>
+        <li>1st Place: ₦1000</li>
+        <li>2nd Place: ₦500</li>
+        <li>3rd Place: ₦250</li>
+        <li>4th Place: ₦100</li>
+        <li>5th Place: ₦50</li>
+      </ul>
+    </section>
+
+    <!-- Contestant List (embedded website) -->
+    <section class="contestant-list">
+      <h2>Contestant List</h2>
+        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSZC0VTluO0ObdTwpnB8T2yf53y0ck96MOIWXINaK8Cxfyck_SuOAgKodNixQoQNNOyDRsA_w9obMj2/pubhtml?widget=true&amp;headers=false" width="100%" height="500" frameborder="0"></iframe>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 progamesng. All rights reserved.</p>
+  </footer>
+</body>
+</html>

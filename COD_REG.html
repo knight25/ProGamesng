@@ -1,19 +1,201 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Call of Duty Mobile</title>
-
-    <link rel="stylesheet" href="./Registration/COD_Mobile//Assets/bootstrap.min.css">
-    <link rel="stylesheet" href="./Registration/COD_Mobile//Assets/style.css">
-    <link rel="icon" href="./Registration/COD_Mobile//Assets/logo.png" type="image/x-icon">
+    <title>Call of Duty Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Modal Background */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: #0D0D59;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            background-color: #1F1F1F;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+
+        .container img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 26px;
+            color: #FFFFFF;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #CCCCCC;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 10px;
+            background-color: #2B2B2B;
+            border: 1px solid #444;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #FFFFFF;
+        }
+
+        button {
+            width: 80%;
+            padding: 12px 0;
+            background: linear-gradient(45deg, rgb(247,112,98) 0%, rgb(254,81,150) 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+        }
+
+        button:hover {
+            background: linear-gradient(45deg, rgb(254,81,150) 0%, rgb(247,112,98) 100%);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            transform: translateY(-2px);
+        }
+
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgb(254,81,150);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+                margin-top: 30px;
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+    
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script>
+        async function submitForm(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const form = document.getElementById('registration-form');
+            const formData = new FormData(form);
+
+            const data = {
+                Name: formData.get('Name'),
+                Username: formData.get('Username'),
+                Number: formData.get('Number'),
+                Email: formData.get('Email'),
+                Gender: formData.get('Gender'),
+                Device: formData.get('Device')
+            };
+
+            // Initialize Paystack payment
+            const handler = PaystackPop.setup({
+                key: 'pk_test_8bfa7b411eb287a07baed7a5c31cccdd4886a578', // Replace with your Paystack public key
+                email: data.Email,
+                amount: 5000 * 100, // Replace with the correct amount in your local currency (e.g., NGN)
+                currency: 'NGN', // Replace with your preferred currency
+                callback: function (response) {
+                    // After a successful payment
+                    data.TransactionID = response.reference;
+                    data.PaymentStatus = 'success';
+
+                    // Send form data to Google Forms
+                    sendToGoogleForms(data);
+
+                    // Show custom modal after successful form submission
+                    showModal();
+                },
+                onClose: function () {
+                    alert('Transaction was not completed.');
+                }
+            });
+
+            handler.openIframe(); // Open the Paystack payment window
+        }
+
+        async function sendToGoogleForms(data) {
+            const googleFormURL1 = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSc4e16v-kXeINvkw3EIdlYtkYxIhlarvX6jKQxyU8QCWnlOfw/formResponse';
+            const googleFormURL2 = 'https://docs.google.com/forms/d/e/1FAIpQLScfJV_5U367Ua1tCou9c8s8Z4KPMySKj27tRJTf0ca0BTqeDQ/formResponse'; // Second Google Form URL
+
+            const formData1 = new FormData();
+            formData1.append('entry.1784806187', data.Name); 
+            formData1.append('entry.1553368485', data.Username); 
+            formData1.append('entry.318829460', data.Number); 
+            formData1.append('entry.866832824', data.Email); 
+            formData1.append('entry.2047399584', data.Gender); 
+            formData1.append('entry.1955030181', data.Device); 
+            formData1.append('entry.38495882', data.TransactionID); 
+            formData1.append('entry.722784749', data.PaymentStatus); 
+
+            const formData2 = new FormData();
+            formData2.append('entry.1922325064', data.Username); 
+            // formData2.append('entry.XXXXXXXX', data.SomeField); // Uncomment and modify as needed
+
+            try {
+                await fetch(googleFormURL1, { method: 'POST', mode: 'no-cors', body: formData1 });
+                await fetch(googleFormURL2, { method: 'POST', mode: 'no-cors', body: formData2 });
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function showModal() {
+            const modal = document.getElementById('custom-modal');
+            modal.style.display = 'block'; // Show the modal
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('custom-modal');
+            modal.style.display = 'none'; // Hide the modal
+        }
+
+        // Attach event listener to the button
+        window.onload = function () {
+            const button = document.querySelector('button[type="submit"]');
+            button.addEventListener('click', submitForm);
+        };
+
+    </script>
+    
+    
+    <style>
+               /* Modal Background */
 .custom-modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -62,214 +244,68 @@
     background-color: #45a049;
 }
 
-    
     </style>
     
-    <script src="https://js.paystack.co/v1/inline.js"></script> <!-- Paystack inline script -->
-    <script>
-        async function submitForm(event) {
-    event.preventDefault(); // Prevent the default form submission
-
-    const form = document.getElementById('registration-form');
-    const formData = new FormData(form);
-
-    const data = {
-        Name: formData.get('Name'),
-        Username: formData.get('Username'),
-        Number: formData.get('Number'),
-        Email: formData.get('Email'),
-        Gender: formData.get('Gender'),
-        Device: formData.get('Device')
-    };
-
-    // Initialize Paystack payment
-    const handler = PaystackPop.setup({
-        key: 'pk_test_8bfa7b411eb287a07baed7a5c31cccdd4886a578', // Replace with your Paystack public key
-        email: data.Email,
-        amount: 5000 * 100, // Replace with the correct amount in your local currency (e.g., NGN)
-        currency: 'NGN', // Replace with your preferred currency
-        callback: function (response) {
-            // After a successful payment
-            data.TransactionID = response.reference;
-            data.PaymentStatus = 'success';
-
-            // Send form data to Google Forms
-            sendToGoogleForms(data);
-
-            // Show custom modal after successful form submission
-            showModal();
-        },
-        onClose: function () {
-            alert('Transaction was not completed.');
-        }
-    });
-
-    handler.openIframe(); // Open the Paystack payment window
-}
-
-           async function sendToGoogleForms(data) {
-               const googleFormURL1 = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSc4e16v-kXeINvkw3EIdlYtkYxIhlarvX6jKQxyU8QCWnlOfw/formResponse';
-               const googleFormURL2 = 'https://docs.google.com/forms/d/e/1FAIpQLScfJV_5U367Ua1tCou9c8s8Z4KPMySKj27tRJTf0ca0BTqeDQ/formResponse'; // Second Google Form URL
-
-               const formData1 = new FormData();
-               formData1.append('entry.1784806187', data.Name); 
-               formData1.append('entry.1553368485', data.Username); 
-               formData1.append('entry.318829460', data.Number); 
-               formData1.append('entry.866832824', data.Email); 
-               formData1.append('entry.2047399584', data.Gender); 
-               formData1.append('entry.1955030181', data.Device); 
-               formData1.append('entry.38495882', data.TransactionID); 
-               formData1.append('entry.722784749', data.PaymentStatus); 
-
-               const formData2 = new FormData();
-               formData2.append('entry.1922325064', data.Username); 
-               formData2.append('entry.XXXXXXXX', data.SomeField); 
-
-               try {
-                   await fetch(googleFormURL1, { method: 'POST', mode: 'no-cors', body: formData1 });
-                   await fetch(googleFormURL2, { method: 'POST', mode: 'no-cors', body: formData2 });
-
-               } catch (error) {
-                   console.error('Error:', error);
-               }
-           }
-
-        // Function to display the custom modal
-           function showModal() {
-               const modal = document.getElementById('custom-modal');
-               modal.style.display = 'block'; // Show the modal
-           }
-
-     // Function to close the modal
-           function closeModal() {
-               const modal = document.getElementById('custom-modal');
-               modal.style.display = 'none'; // Hide the modal
-           }
-
-      // Close the modal when the user clicks on the close button
-           document.querySelector('.close-btn').addEventListener('click', closeModal);
-
-
-    </script>
-   
 </head>
-
 <body>
     <!-- Modal Structure -->
      <div id="custom-modal" class="custom-modal">
          <div class="custom-modal-content">
              <span class="close-btn">&times;</span>
-             <h2 style="color: black">Registration Completed!</h2><br>
+             <h1 style="color: black">Registration Completed!</h1><br>
              <p style="color: black">Thanks for registering. Your payment has been received successfully.</p><br>
              <button class="modal-btn" onclick="closeModal()">OK</button>
          </div>
      </div>
+    <div class="container">
+        <img src="Assets/logo.png" alt="Registration Icon">
 
-    <!-- Registration start -->
-    <section id="login-reg">
-        <div class="overlay pb-120">
-            <div class="container">
-                <div class="top-area">
-                    <div class="row d-flex align-items-center">
-                        <div class="col-sm-5 col">
-                        </div>
-                        
-                        <div class="col-sm-5 col">
-                            <a href="#">
-                                <img src="Assets/logo.png" alt="image">
-                            </a>
-                        </div>
+        <h2>CODM Registration Form</h2>
 
-                        <div class="col-sm-5 col">
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-120 d-flex justify-content-center">
-                    <div class="col-lg-6">
-                        <div class="login-reg-main text-center">
-                            <h4>Let's get started</h4>
-                            <div class="form-area">
-                                <form id="registration-form" onsubmit="submitForm(event)">
-                                    <div class="form-group">
-                                        <label>Full Name</label>
-                                        <input placeholder="Enter your FullName" type="text" name="Name" required style="text-transform: uppercase;">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>CODM Username</label>
-                                        <input placeholder="Enter your UserName" type="text" name="Username" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Whatsapp Number</label>
-                                        <input placeholder="080**********" min="1" max-length="11" type="number" name="Number" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>E- Mail</label>
-                                        <input placeholder="johndeo@gmail.com" type="text" name="Email" required>
-                                    </div>
-                                    <div class="form-group">
-                                           <label for="gender">Gender</label>
-                                           <div class="select-box" style="outline:none; border: none; margin-top: -14px;" >
-                                              <select id="gender" name="Gender" required>
-                                                 <option selected disabled></option>
-                                                 <option value="Male">Male</option>
-                                                 <option value="Female">Female</option>
-                                             </select> 
-                                           </div>
-                                    </div>
-                                    <div class="form-group" style="margin-top: -20px;">
-                                        <label for="device">Your Mobile Device </label>
-                                        <div class="select-box" style="outline:none; border: none; margin-top: -14px;" >
-                                           <select id="device" name="Device" required>
-                                              <option selected disabled></option>
-                                              <option value="Iphone">Iphone</option>
-                                              <option value="Samsung">Samsung</option>
-                                              <option value="Xiaomi">Xiaomi</option>
-                                              <option value="Infinix">Infinix</option>
-                                              <option value="Tecno">Tecno</option>
-                                              <option value="Oppo">Oppo</option>
-                                              <option value="Itel">Itel</option>
-                                              <option value="Huawei">Huawei</option>
-                                              <option value="Nokia">Nokia</option>
-                                              <option value="Google">Google</option>
-                                              <option value="Vivo">Vivo</option>
-                                              <option value="Gionee">Gionee</option>
-                                              <option value="Azus">Azus</option>
-                                              <option value="Others">Others</option>
-                                          </select> 
-                                        </div>
-                                 </div>
-                                    <div class="form-group">
-                                        <button type="submit" class="cmn-btn" onclick="payWithPaystack()">Pay and join</button>
-                                        <!-- Type in [disabled] when you don't want the button to be functional -->
-                                    </div><br><br>
-                                </form>
-                            </div>
-                            </div><br>  
-                        
-                        <div class="login-reg-main text-center">
-                            <div id="countdown" style="color: white">
-                                 <h2>00d 00h 00m 00s</h2>
-                            </div>
-                        </div>
-                        
-                        </div>
-                    </div>
-                </div>
+        <form id="registration-form" method="POST">
+            <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input placeholder="Enter your FullName" type="text" name="Name" required>
             </div>
-    </section>
-    <!-- Registration end -->
-     <script src="Registration/COD_Mobile/countdown.js"></script>
-    <script>
-        function submitForm(event)() {
-            let nameInput = document.getElementById("name");
-            nameInput.value = nameInput.value.toUpperCase();
-        }
-    
-    </script>
 
-  
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input placeholder="Enter your UserName" type="text" name="Username" required>
+            </div>
 
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input placeholder="080**********" min="1" max-length="11" type="tel" id="phone" name="Number" required>
+            </div>
 
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input placeholder="johndeo@gmail.com" type="text" name="Email" required>
+            </div>
 
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender" name="Gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="device">Mobile Device</label>
+                <select id="device" name="Device" required>
+                    <option value="">Select Device</option>
+                    <option value="android">Android</option>
+                    <option value="ios">iOS</option>
+                    <option value="windows">Windows Phone</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <button type="submit" class="cmn-btn">Register</button>
+        </form>
+    </div>
 </body>
 </html>
