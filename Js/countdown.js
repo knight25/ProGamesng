@@ -8,7 +8,7 @@ let countdownTimer = setInterval(function() {
 
     if (timeLeft <= 0) {
         clearInterval(countdownTimer);
-        document.getElementById('countdown').textContent = "REGISTRATION HAS ENDED";
+        document.getElementById('countdown').textContent = "[ REGISTRATION HAS ENDED ]";
     } else {
         // Calculate days, hours, minutes, and seconds
         let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
