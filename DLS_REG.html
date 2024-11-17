@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Call of Duty Registration</title>
+    <title>Dream League Soccer Registration</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
@@ -150,21 +150,21 @@
         }
 
         async function sendToGoogleForms(data) {
-            const googleFormURL1 = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSc4e16v-kXeINvkw3EIdlYtkYxIhlarvX6jKQxyU8QCWnlOfw/formResponse';
-            const googleFormURL2 = 'https://docs.google.com/forms/d/e/1FAIpQLScfJV_5U367Ua1tCou9c8s8Z4KPMySKj27tRJTf0ca0BTqeDQ/formResponse'; // Second Google Form URL
+            const googleFormURL1 = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSeOEGh09D-suEz_xpGPZN1mUnhFzUD-vHqQvadMDyu2XM06ng/formResponse';
+            const googleFormURL2 = 'https://docs.google.com/forms/d/e/1FAIpQLSfsFf615HYSCnaIF28a3pMHYMZ4-RdV0kBHbcs4qqxJ5HW0Ig/formResponse'; // Second Google Form URL
 
             const formData1 = new FormData();
-            formData1.append('entry.1784806187', data.Name); 
-            formData1.append('entry.1553368485', data.Username); 
-            formData1.append('entry.318829460', data.Number); 
-            formData1.append('entry.866832824', data.Email); 
-            formData1.append('entry.2047399584', data.Gender); 
-            formData1.append('entry.1955030181', data.Device); 
-            formData1.append('entry.38495882', data.TransactionID); 
-            formData1.append('entry.722784749', data.PaymentStatus); 
+            formData1.append('entry.788447643', data.Name); 
+            formData1.append('entry.73825334', data.Username); 
+            formData1.append('entry.1576485372', data.Number); 
+            formData1.append('entry.2014004470', data.Email); 
+            formData1.append('entry.571067947', data.Gender); 
+            formData1.append('entry.1704601184', data.Device); 
+            formData1.append('entry.1695887622', data.TransactionID); 
+            formData1.append('entry.1409858425', data.PaymentStatus); 
 
             const formData2 = new FormData();
-            formData2.append('entry.1922325064', data.Username); 
+            formData2.append('entry.501157833', data.Username); 
             // formData2.append('entry.XXXXXXXX', data.SomeField); // Uncomment and modify as needed
 
             try {
@@ -260,7 +260,7 @@
     <div class="container">
         <img src="Assets/logo.png" alt="Registration Icon">
 
-        <h2>CODM Registration Form</h2>
+        <h2>DLS Registration Form</h2>
 
         <form id="registration-form" method="POST">
             <div class="form-group">
@@ -269,7 +269,7 @@
             </div>
 
             <div class="form-group">
-                <label for="username">COD Username</label>
+                <label for="username">DLS Username</label>
                 <input placeholder="Enter your UserName" type="text" name="Username" required>
             </div>
 
