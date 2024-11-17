@@ -1,5 +1,5 @@
 // Set the date for the event (Year, Month (0-11), Day, Hour, Minute, Second)
-let eventDate = new Date("Sep 18, 2024 11:42:00").getTime();
+let eventDate = new Date("Nov 18, 2024 00:25:00").getTime();
 
 // Function to update the countdown every second
 let countdownTimer = setInterval(function() {
